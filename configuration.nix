@@ -24,7 +24,7 @@
   };
 
   networking = {
-    hostName = "nixos"; # Define your hostname.
+    hostName = "nixos.zennad"; # Define your hostname.
     networkmanager.enable = true;
 
     # Configure network proxy if necessary
