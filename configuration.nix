@@ -104,6 +104,17 @@
   #   uid = 1000;
   # };
 
+  users = with pkgs; {
+    defaultUserShell = zsh;
+    # mutableUsers = true;
+    users.zennad = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "sudo" ];
+      initialHashedPassword =
+        "$6$rXIee8bBDX4inR.R$TOvEJBuhbFeth8n49niyehvdvyFxTX3ZnoPYz9vZ4o3Gy7tSgqcyfF0q1BsMOBqAlTyNVUkDrw0uvIyrhFUv6.";
+    };
+  };
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
