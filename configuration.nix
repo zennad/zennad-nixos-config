@@ -112,6 +112,28 @@
       extraGroups = [ "wheel" "sudo" ];
       initialHashedPassword =
         "$6$rXIee8bBDX4inR.R$TOvEJBuhbFeth8n49niyehvdvyFxTX3ZnoPYz9vZ4o3Gy7tSgqcyfF0q1BsMOBqAlTyNVUkDrw0uvIyrhFUv6.";
+      packages = [
+        aescrypt
+        aespipe
+        blender
+        coq
+        darling-dmg
+        firefox
+        git-hub
+        gnucash
+        metamath
+        mkpasswd
+        neofetch
+        neovim
+        p7zip
+        qemu
+        radare2
+        unzip
+        vlc
+        w3m
+        wineFull
+        winetricks
+        wireshark ];
     };
   };
 
