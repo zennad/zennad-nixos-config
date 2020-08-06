@@ -50,19 +50,23 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    wget
-    vim
-    curl
-    networkmanager
-    zsh
-    bash
-    gnupg
-    emacs
-    ghc
-    stack
-    xmonad-with-packages
-  ];
+  environment =
+    {
+      systemPackages = with pkgs; [
+        wget
+        vim
+        curl
+        networkmanager
+        zsh
+        bash
+        gnupg
+        emacs
+        ghc
+        stack
+        xmonad-with-packages
+      ];
+      shells = with pkgs; [ bash zsh ];
+    };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
