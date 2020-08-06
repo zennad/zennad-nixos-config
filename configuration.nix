@@ -16,7 +16,8 @@
 
   # boot.kernelModules = [ "zcache" ];
 
-  boot.initrd.luks.devices.crypted.device = "/dev/disk/by-uuid/d7589e83-ec1d-4738-823f-929875f1bdb2";
+  boot.initrd.luks.devices.crypted.device =
+    "/dev/disk/by-uuid/d7589e83-ec1d-4738-823f-929875f1bdb2";
 
   zramSwap = {
     enable = true;
@@ -116,7 +117,9 @@
       isNormalUser = true;
       extraGroups = [ "wheel" "sudo" ];
       initialHashedPassword =
-        "$6$rXIee8bBDX4inR.R$TOvEJBuhbFeth8n49niyehvdvyFxTX3ZnoPYz9vZ4o3Gy7tSgqcyfF0q1BsMOBqAlTyNVUkDrw0uvIyrhFUv6.";
+        "$6$rXIee8bBDX4inR.R$TOvEJBuhbFeth8n
+        49niyehvdvyFxTX3ZnoPYz9vZ4o3Gy7tSgqc
+        yfF0q1BsMOBqAlTyNVUkDrw0uvIyrhFUv6.";
       packages = [
         aescrypt
         aespipe
