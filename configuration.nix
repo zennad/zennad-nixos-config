@@ -58,14 +58,15 @@
         curl
         networkmanager
         zsh
-        bash
+        zsh-powerlevel10k
+        bash_5
         gnupg
         emacs
         ghc
         stack
         xmonad-with-packages
       ];
-      shells = with pkgs; [ bash zsh ];
+      shells = with pkgs; [ bash_5 zsh ];
     };
 
   # Some programs need SUID wrappers, can be configured further or are
