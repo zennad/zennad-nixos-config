@@ -66,6 +66,7 @@
         ghc
         stack
         xmonad-with-packages
+        zerotierone
       ];
       shells = with pkgs; [ bash_5 zsh ];
     };
