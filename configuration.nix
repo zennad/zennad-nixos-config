@@ -142,7 +142,9 @@
         w3m
         wineFull
         winetricks
-        wireshark ];
+        wireshark
+        runelite
+      ];
     };
   };
 
