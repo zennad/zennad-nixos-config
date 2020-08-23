@@ -2,8 +2,10 @@
   description = "zennad's configuration flake";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.03";
-    hardware-config.url = "/etc/nixos/hardware-configuration.nix";
-    hardware-config.flake = false;
+    hardware-config = {
+      url = "/etc/nixos/hardware-configuration.nix";
+      flake = false;
+    };
   };
   outputs = { self, nixpkgs, hardware-config }: {
     nixosConfigurations."nixos.zennad" = nixpkgs.lib.nixosSystem {
