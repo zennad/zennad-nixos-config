@@ -2,10 +2,7 @@
   description = "zennad's configuration flake";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.03";
-    # hardware-config = {
-    #   url = "/etc/nixos/hardware-configuration.nix";
-    #   flake = false;
-    # };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
   outputs = { self
             , nixpkgs
@@ -17,6 +14,7 @@
         modules = [ ./configuration.nix
                     ./hardware-configuration.nix
                     nixpkgs.nixosModules.notDetected
+                    nixos-hardware.nixosModules.lenovo-thinkpad-t420
                   ];
       };
     };
