@@ -16,9 +16,6 @@
 
   # boot.kernelModules = [ "zcache" ];
 
-  boot.initrd.luks.devices.crypted.device =
-    "/dev/disk/by-uuid/d7589e83-ec1d-4738-823f-929875f1bdb2";
-
   zramSwap = {
     enable = true;
     # algorithm = "zstd";
