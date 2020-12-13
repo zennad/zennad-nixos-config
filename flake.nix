@@ -1,22 +1,21 @@
 {
   description = "zennad's configuration flake";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.03";
-    # hardware = {
-    #   url = "/etc/nixos/hardware-configuration.nix";
-    #   flake = false;
-    # };
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-20.03;
+    nixos-hardware.url = github:NixOS/nixos-hardware/master;
   };
-  outputs = { self, ... }@deps: {
-    nixosConfigurations."nixos.zennad" =
-      deps.nixpkgs.lib.nixosSystem {
+  outputs = { self
+            , nixpkgs
+            , nixos-hardware
+            , ... }:
+    {
+      nixosConfigurations."nixos.zennad" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./configuration.nix ];
+        modules = [ ./configuration.nix
+                    ./hardware-configuration.nix
+                    nixpkgs.nixosModules.notDetected
+                    nixos-hardware.nixosModules.lenovo-thinkpad-t420
+                  ];
+      };
     };
-    # nixosModules = with deps.nixpkgs.nixosModules;
-    #                { hardware = { config, ... }:
-    #                    { imports = [ deps.hardware ]; };
-    #                  installer = notDetected;
-    #                };
-  };
 }
