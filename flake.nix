@@ -7,12 +7,16 @@
     #   flake = false;
     # };
   };
-  outputs = { self, ... }@deps: {
-    nixosConfigurations."nixos.zennad" =
-      deps.nixpkgs.lib.nixosSystem {
+  outputs = { self
+            , nixpkgs
+            , nixos-hardware
+            , ... }:
+    {
+      nixosConfigurations."nixos.zennad" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./configuration.nix ];
+        modules = [ ./configuration.nix
+                    ./hardware-configuration.nix
+                  ];
+      };
     };
-    nixosModules = [ ./hardware-configuration.nix ];
-  };
 }
