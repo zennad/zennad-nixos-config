@@ -59,7 +59,7 @@
         networkmanager
         zsh
         zsh-powerlevel10k
-        bash_5
+        bash
         gnupg
         emacs
         ghc
@@ -67,7 +67,7 @@
         xmonad-with-packages
         zerotierone
       ];
-      shells = with pkgs; [ bash_5 zsh ];
+      shells = with pkgs; [ zsh bash ];
     };
 
   # Some programs need SUID wrappers, can be configured further or are
