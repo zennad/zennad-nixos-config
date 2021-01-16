@@ -65,7 +65,6 @@
         ghc
         stack
         xmonad-with-packages
-        zerotierone
       ];
       shells = with pkgs; [ zsh bash ];
     };
@@ -121,28 +120,16 @@
         49niyehvdvyFxTX3ZnoPYz9vZ4o3Gy7tSgqc
         yfF0q1BsMOBqAlTyNVUkDrw0uvIyrhFUv6.";
       packages = [
-        aescrypt
-        aespipe
-        blender
-        coq
-        darling-dmg
         firefox
-        git-hub
-        gnucash
-        metamath
         mkpasswd
-        neofetch
-        neovim
         p7zip
-        qemu
-        radare2
         unzip
         vlc
         w3m
         wineFull
         winetricks
-        wireshark
-        runelite
+        gmrun
+        dmenu
       ];
     };
   };
