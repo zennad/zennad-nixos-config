@@ -5,139 +5,143 @@
 { config, pkgs, ... }:
 
 {
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+    ];
+
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes ca-references
     '';
+    trustedUsers = [ "root" "@wheel" ];
+    allowedUsers = [ "root" "@whell" ];
   };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # boot.kernelModules = [ "zcache" ];
-
   zramSwap = {
     enable = true;
-    # algorithm = "zstd";
   };
 
-  networking = {
-    hostName = "nixos-zennad"; # Define your hostname.
-    networkmanager.enable = true;
+  # Set your time zone.
+  time.timeZone = "Europe/London";
 
-    # Configure network proxy if necessary
-    # proxy.default = "http://user:password@proxy:port/";
-    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  networking = {
+    # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+    # Per-interface useDHCP will be mandatory in the future, so this generated config
+    # replicates the default behaviour.
+    useDHCP = false;
+    interfaces.enp0s25.useDHCP = true;
+    interfaces.wlp3s0.useDHCP = true;
+
+    hostName = "nixos"; # Define your hostname.
 
     # Open ports in the firewall.
-    firewall.allowedTCPPorts = [ 443 22 ];
-    # firewall.allowedUDPPorts = [ ];
-    # Or disable the firewall altogether.
-    # firewall.enable = false;
+    firewall.allowedTCPPorts = [ 22 ];
+
+    networkmanager.enable = true;
   };
 
   # Select internationalisation properties.
-  # i18n = {
-  #   consoleFont = "Lat2-Terminus16";
-  #   consoleKeyMap = "us";
-  #   defaultLocale = "en_US.UTF-8";
-  # };
+  i18n.defaultLocale = "en_US.UTF-8";
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+  };
 
-  # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
+  services.xserver = {
+    enable = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment =
-    {
-      systemPackages = with pkgs; [
-        wget
-        vim
-        curl
-        networkmanager
-        zsh
-        zsh-powerlevel10k
-        bash
-        gnupg
-        emacs
-        ghc
-        stack
-        xmonad-with-packages
-      ];
-      shells = with pkgs; [ zsh bash ];
+    # Configure keymap in X11
+    layout = "us";
+    xkbOptions = "eurosign:e";
+
+    # Enable touchpad support (enabled default in most desktopManager).
+    libinput.enable = true;
+
+    displayManager.lightdm.enable = true;
+
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      extraPackages = haskellPackages:
+        with haskellPackages;
+          [
+            xmonad-contrib
+            monad-logger
+            pkgs.alacritty
+          ];
+      config = ''
+        import XMonad
+
+        main = launch defaultConfig
+                 { modMask = mod4Mask -- Use Super instead of Alt
+                 , terminal = "alacritty"
+                 }
+        '';
     };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  programs.mtr.enable = true;
-  programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  };
 
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable touchpad support.
-  services.xserver.libinput.enable = true;
-
-  services.xserver.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
-  };
-
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.guest = {
-  #   isNormalUser = true;
-  #   uid = 1000;
-  # };
-
-  users = with pkgs; {
-    defaultUserShell = zsh;
-    # mutableUsers = true;
-    users.zennad = {
+  users.users = {
+    zennad = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "sudo" ];
-      initialHashedPassword =
-        "$6$rXIee8bBDX4inR.R$TOvEJBuhbFeth8n
-        49niyehvdvyFxTX3ZnoPYz9vZ4o3Gy7tSgqc
-        yfF0q1BsMOBqAlTyNVUkDrw0uvIyrhFUv6.";
-      packages = [
-        firefox
-        mkpasswd
-        p7zip
-        unzip
-        vlc
-        w3m
-        wineFull
-        winetricks
-        gmrun
+      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+      hashedPassword = 
+        "$6$DIcdGUplHK$pceFlXC9JIevO8o4y5.f9A6/r0VnCtcTWFHih1cMBCMbgOoMsirOt6V9IKDk.dtz2IIhCn6xJ1zu4gTJlm178.";
+      packages = with pkgs; [
+        brave
+        alacritty
         dmenu
+        bitwarden
+        gitFull
       ];
     };
+    root.hashedPassword = 
+      "$6$Xvo3D2KJfRYf6j$AJ6DqsEOW4OLOlFzPmpR9WUKIqtNBCiEMzCWHt/NANd2MJoJFVeyHOBRu3O15IpfT5c7D4OiyvH00kbSNXcW8/";
   };
 
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "18.09"; # Did you read the comment?
+  security.sudo.extraConfig =
+  ''
+    Defaults passwd_timeout = 0
+  '';
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+    wget
+    vim
+    w3m
+    networkmanager
+    gnupg
+  ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "20.09"; # Did you read the comment?
 
 }
+
