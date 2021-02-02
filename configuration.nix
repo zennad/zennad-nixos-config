@@ -85,30 +85,6 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users = {
-    zennad = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-      hashedPassword = 
-        "$6$DIcdGUplHK$pceFlXC9JIevO8o4y5.f9A6/r0VnCtcTWFHih1cMBCMbgOoMsirOt6V9IKDk.dtz2IIhCn6xJ1zu4gTJlm178.";
-      packages = with pkgs; [
-        brave
-        alacritty
-        dmenu
-        bitwarden
-        gitFull
-      ];
-    };
-    root.hashedPassword = 
-      "$6$Xvo3D2KJfRYf6j$AJ6DqsEOW4OLOlFzPmpR9WUKIqtNBCiEMzCWHt/NANd2MJoJFVeyHOBRu3O15IpfT5c7D4OiyvH00kbSNXcW8/";
-  };
-
-  security.sudo.extraConfig =
-  ''
-    Defaults passwd_timeout = 0
-  '';
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
