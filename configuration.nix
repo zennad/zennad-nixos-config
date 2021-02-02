@@ -93,6 +93,8 @@
     w3m
     networkmanager
     gnupg
+    alacritty
+    dmenu
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
