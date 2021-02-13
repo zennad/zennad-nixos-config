@@ -11,7 +11,7 @@
       experimental-features = nix-command flakes ca-references
     '';
     trustedUsers = [ "root" "@wheel" ];
-    allowedUsers = [ "root" "@whell" ];
+    allowedUsers = [ "root" "@wheel" ];
   };
 
   # Use the systemd-boot EFI boot loader.
