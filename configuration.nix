@@ -14,12 +14,14 @@
     allowedUsers = [ "root" "@wheel" ];
   };
 
-  boot.loader.systemd-boot = {
-    # Use the systemd-boot EFI boot loader.
-    enable = true;
-    editor = false;
+  boot.loader = {
+    systemd-boot = {
+      # Use the systemd-boot EFI boot loader.
+      enable = true;
+      editor = false;
+    };
+    efi.canTouchEfiVariables = true;
   };
-  boot.loader.efi.canTouchEfiVariables = true;
 
   zramSwap = {
     enable = true;
