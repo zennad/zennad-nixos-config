@@ -7,6 +7,7 @@
     {
       nixosModules = {
         zennad-config = import ./configuration.nix;
+        nix-version = import ./nix-version.nix;
       };
     };
 }
