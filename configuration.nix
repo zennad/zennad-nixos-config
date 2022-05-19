@@ -70,10 +70,12 @@
       config = ''
         import XMonad
 
-        main = launch defaultConfig
-                 { modMask = mod4Mask -- Use Super instead of Alt
-                 , terminal = "alacritty"
-                 }
+        main = do d <- getDirectories
+                  launch defaultConfig
+                    { modMask = mod4Mask -- Use Super instead of Alt
+                    , terminal = "alacritty"
+                    }
+                    d
         '';
     };
   };
