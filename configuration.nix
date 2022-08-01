@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  nix = {
-    trustedUsers = [ "root" "@wheel" ];
-    allowedUsers = [ "root" "@wheel" ];
+  nix.settings = {
+    trusted-users = [ "root" "@wheel" ];
+    allowed-users = [ "root" "@wheel" ];
   };
 
   boot.loader = {
