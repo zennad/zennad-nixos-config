@@ -87,14 +87,14 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget
-    vim
-    w3m
-    networkmanager
-    gnupg
     alacritty
     dmenu
     gmrun
+    gnupg
+    networkmanager
+    vim
+    w3m
+    wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
