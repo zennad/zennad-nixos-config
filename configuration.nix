@@ -82,6 +82,7 @@
 
   # Enable sound.
   sound.enable = true;
+  sound.mediaKeys.enable = true;
   hardware.pulseaudio.enable = true;
 
   # List packages installed in system profile. To search, run:
